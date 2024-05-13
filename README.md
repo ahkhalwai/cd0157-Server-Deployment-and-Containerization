@@ -87,6 +87,27 @@ Completing the project involves several steps:
 
 For more detail about each of these steps, see the project lesson.
 
+## Address(Test your Endpoint) 
+
+musef@Musefs-iMac cd0157-Server-Deployment-and-Containerization % kubectl get services simple-jwt-api -o wide
+NAME             TYPE           CLUSTER-IP     EXTERNAL-IP                                                               PORT(S)        AGE   SELECTOR
+simple-jwt-api   LoadBalancer   10.100.157.8   a1f2d78c1a1734e30b7941c797feda7e-1539350644.us-east-2.elb.amazonaws.com   80:30680/TCP   78s   app=simple-jwt-api
+
+export TOKEN=`curl -d '{"email":"ahkhalwai55@gmail.com","password":"hardy238"}' -H "Content-Type: application/json" -X POST a1f2d78c1a1734e30b7941c797feda7e-1539350644.us-east-2.elb.amazonaws.com/auth  | jq -r '.token'`
+ % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   239  100   184  100    55    114     34  0:00:01  0:00:01 --:--:--   149
+
+curl --request GET 'a1f2d78c1a1734e30b7941c797feda7e-1539350644.us-east-2.elb.amazonaws.com/contents' -H "Authorization: Bearer ${TOKEN}" | jq
+% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    68  100    68    0     0     29      0  0:00:02  0:00:02 --:--:--    30
+{
+  "email": "ahkhalwai55@gmail.com",
+  "exp": 1716788182,
+  "nbf": 1715578582
+}
+
 ### Results
 
 ![Flask API](images/1.png)
